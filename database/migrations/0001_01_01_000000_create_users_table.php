@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('membership_id')->unique();
-            $table->enum('role', ["user", "admin"])->nullable();
+            $table->enum('role', ["user", "admin"])->default("user");
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

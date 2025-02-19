@@ -1,4 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
+import presby_logo from "../../images/pcg_logo.png";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleImageError = () => {
@@ -14,15 +15,18 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
     return (
         <>
-            <header className="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+            <header className="w-5/6 mx-auto grid items-center gap-2 py-10">
                 <nav className="-mx-3 flex flex-1 justify-end">
                     {auth.user ? (
-                        <Link
-                            href={route("dashboard")}
-                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] text-black"
-                        >
-                            BethPoll
-                        </Link>
+                        <div className="flex justify-between w-full mx-auto">
+                            <Link
+                                href={route("dashboard")}
+                                className="rounded-md  px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] text-black"
+                            >
+                                BethPoll
+                            </Link>
+                            <p>Hello</p>
+                        </div>
                     ) : (
                         <>
                             <Link
@@ -40,6 +44,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </>
                     )}
                 </nav>
+                <p className="flex justify-center">
+                    Welcome to The Bethlehem Presby
+                </p>
+                <h1 className="flex justify-center font-bold text-2xl">
+                    Vote Portal
+                </h1>
+                <img className="w-full" src={presby_logo} alt="presby_logo" />
             </header>
         </>
     );
