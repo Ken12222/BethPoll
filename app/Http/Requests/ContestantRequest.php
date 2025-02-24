@@ -24,7 +24,7 @@ class ContestantRequest extends FormRequest
         return [
             "firstName"=>"required|string|max:255",
             "lastName"=>"required|string|max:255",
-            "position"=>"required|string|max:255|min:6",
+            "image"=>"required|mimes:png,jpg,jpeg",
         ];
     }
 }

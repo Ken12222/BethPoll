@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Contestant;
+use App\Models\Vote;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -14,11 +16,22 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $contestants = Contestant::all();
+        if(Auth::user()->role === "user"){
 
         return Inertia::render("Dashboard", [
-            "contestants"=>$contestants
+            "contestants"=>Contestant::with("votes")->get(),
+            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count(),
+            "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+            //"votes"=>Vote::where("user_id", Auth::user()->id)->get()
         ]);
+        }
+
+        return Inertia::render("Dashboard", [
+            "contestants"=>Contestant::with("votes")->get(),
+            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count()
+            //"votes"=>Vote::where("user_id", Auth::user()->id)->get()
+        ]);
+
     }
 
     /**

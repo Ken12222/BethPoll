@@ -30,13 +30,10 @@ export default function contestantIndex({ contestants }) {
 
                                 <div className=" flex justify-between px-4 py-2">
                                     <p className="pr-4 text-gray-400">Name</p>
-                                    <p className="pr-4 text-gray-400">
-                                        Position
-                                    </p>
+
                                     <p className="pr-4 text-gray-400">Votes</p>
-                                    <p className="pr-4 text-gray-400">
-                                        Created At
-                                    </p>
+                                    <p className="pr-4 text-gray-400">Rank</p>
+
                                     <p className="pr-4 text-gray-400">Action</p>
                                 </div>
                                 {Array.isArray(contestants) &&
@@ -44,16 +41,19 @@ export default function contestantIndex({ contestants }) {
                                     contestants.map((contestant) => (
                                         <div
                                             key={contestant.id}
-                                            className="flex justify-between p-4"
+                                            className="flex justify-between px-4 pb-2 border-b mb-2"
                                         >
                                             <p className="pr-4">
                                                 {contestant.firstName}{" "}
                                                 {contestant.lastName}
                                             </p>
                                             <p className="pr-4">
-                                                {contestant.position}
+                                                {contestant.votes.length}
                                             </p>
-                                            <p>{contestant.created_at}</p>
+                                            <p className="px-4 my-auto rounded-sm bg-green-200 text-green-500">
+                                                First
+                                            </p>
+
                                             <Link
                                                 className="flex rounded-lg bg-green-600 text-white px-6 py-1"
                                                 href={route("contestant.show", {

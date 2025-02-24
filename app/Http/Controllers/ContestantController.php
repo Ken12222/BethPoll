@@ -45,6 +45,17 @@ class ContestantController extends Controller
             return Inertia::render('/createContestant', ['failed'=>'Candidate already exists.']);
         }
 
+        if($request->hasFile("image")){
+            $file = $request->file("image");
+
+            $fileExtension = $file->getClientOriginalExtension();
+            $extensionToLower = strtolower($fileExtension);
+            $fileName = time().".".$extensionToLower;
+            $filePath = $file->storeAs("uploads", $fileName, "public");
+
+            $contestantData["image"] = "storage/" . $filePath;
+        }
+
         $newContestant = Contestant::create($contestantData);
         $contestants = Contestant::latest()->get();
         return Inertia::render('Contestant/Index',['success', 'Post created successfully.',

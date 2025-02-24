@@ -17,7 +17,10 @@ class VoteController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render("Votes.Index", [
+            "contestants"=>Contestant::all(),
+            "votes"=>Vote::all()
+        ]);
     }
 
     /**
@@ -33,14 +36,47 @@ class VoteController extends Controller
      */
     public function store(VoteRequest $request)
     {
-        $voteData = $request->validated();
-        $voteData["user_id"] = Auth::user()->id;
-        $newVote = Vote::create($voteData);
-        
-        return Inertia::render("Dashboard", [
-            "contestants"=>Contestant::all(),
-            "votes"=>Vote::all()
-        ]);
+        if(Auth::user()->role === "user"){
+            $voteData = $request->validated();
+            $voteData["user_id"] = Auth::user()->id;
+            
+            //user already voted a candidate
+            $alreadyVotedFor = Vote::where("contestant_id", $voteData["contestant_id"])
+            ->where("user_id", Auth::user()->id)->first();
+            
+            //count number of votes by a user
+            $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
+            if($alreadyVotedFor){
+                return Inertia::render("Dashboard", [
+                    "errors"=>"You have already voted for this candidate",
+                    "contestants"=>Contestant::with("votes")->get(),
+                    "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+                ]); 
+        }
+        if($userVoteCount === 10){
+            return Inertia::render("Dashboard", [
+                "error"=>"You can only vote 10 candidates",
+                "message"=>"Thank You for Voting",
+                "contestants"=>Contestant::with("votes")->get(),
+                "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+            ]); 
+        }
+
+            $newVote = Vote::create($voteData);
+            if($newVote){
+                return Inertia::render("Dashboard", [
+                    "message"=>"You have successfully voted",
+                    "contestants"=>Contestant::with("votes")->get(),
+                    "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+                ]); 
+            }
+            return Inertia::render("Dashboard", [
+                "contestants"=>Contestant::with("votes")->get(),
+            ]); 
+    }
+
+
+
     }
 
     /**

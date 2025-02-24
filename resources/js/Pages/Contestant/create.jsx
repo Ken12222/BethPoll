@@ -6,7 +6,7 @@ export default function createContestant() {
     const { data, setData, post, processing, errors } = useForm({
         firstName: "",
         lastName: "",
-        position: "",
+        image: "",
     });
 
     function handleSubmit(e) {
@@ -29,6 +29,7 @@ export default function createContestant() {
                             <form
                                 onSubmit={handleSubmit}
                                 className="flex flex-wrap md:no-wrap gap-4 my-4"
+                                encType="multipart/form-data"
                             >
                                 <div className="w-5/6 mx-auto">
                                     <label htmlFor="Firstname">Firstname</label>
@@ -73,22 +74,22 @@ export default function createContestant() {
                                 </div>
 
                                 <div className="w-5/6 mx-auto">
-                                    <label htmlFor="Position">Position</label>
+                                    <label htmlFor="Image">Upload Image</label>
                                     <input
-                                        type="text"
-                                        value={data.position}
+                                        type="file"
+                                        name="image"
+                                        value={data.image}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                position: e.target.value,
+                                                image: e.target.files[0],
                                             })
                                         }
-                                        placeholder="enter candidate Position"
-                                        className="w-full rounded-lg"
+                                        className="w-full border-2 rounded-lg p-1"
                                     />
-                                    {errors.position && (
+                                    {errors.image && (
                                         <p className="text-red-600">
-                                            {errors.position}
+                                            {errors.image}
                                         </p>
                                     )}
                                 </div>
