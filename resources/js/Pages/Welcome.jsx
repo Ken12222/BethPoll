@@ -44,13 +44,17 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </>
                     )}
                 </nav>
-                <p className="flex justify-center">
+                <h1 className="flex justify-center text-xl">
                     Welcome to The Bethlehem Presby
-                </p>
+                </h1>
                 <h1 className="flex justify-center font-bold text-2xl">
                     Vote Portal
                 </h1>
-                <img className="w-full" src={presby_logo} alt="presby_logo" />
+                <img
+                    className="w-100 h-100 mx-auto"
+                    src={presby_logo}
+                    alt="presby_logo"
+                />
             </header>
         </>
     );

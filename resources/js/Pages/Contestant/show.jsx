@@ -21,12 +21,12 @@ export default function showCotestant({ contestant }) {
                                 <div className="flex gap-4">
                                     <img
                                         className="w-36 h-36 mx-4"
-                                        src=""
+                                        src={contestant.image}
                                         alt=""
                                     />
                                     <div>
-                                        <div className="flex">
-                                            <p className="text-gray-400">
+                                        <div className="flex mb-4">
+                                            <p className="text-gray-400 mr-2">
                                                 Name:
                                             </p>
                                             <p>
@@ -35,28 +35,28 @@ export default function showCotestant({ contestant }) {
                                                 {contestant.lastName}
                                             </p>
                                         </div>
-                                        <div className="flex">
-                                            <p className="text-gray-400">
-                                                Position:
+                                        <div className="flex mb-4">
+                                            <p className="text-gray-400 mr-2">
+                                                Votes:
                                             </p>
-                                            <p> {contestant.position}</p>
+                                            {contestant.votes_count}
                                         </div>
+                                        <Link
+                                            href={route("contestant.destroy", {
+                                                id: contestant.id,
+                                            })}
+                                            method="delete"
+                                            className="text-white bg-red-500 rounded-lg p-2 h-fit mr-4"
+                                        >
+                                            Remove Candidate
+                                        </Link>
+                                        <Link
+                                            href="/contestants/edit"
+                                            className="text-white bg-blue-500 rounded-lg p-2 h-fit"
+                                        >
+                                            Update Details
+                                        </Link>
                                     </div>
-                                    <Link
-                                        href={route("contestant.destroy", {
-                                            id: contestant.id,
-                                        })}
-                                        method="delete"
-                                        className="text-white bg-red-500 rounded-lg p-2 h-fit"
-                                    >
-                                        Remove Candidate
-                                    </Link>
-                                    <Link
-                                        href="/contestants/edit"
-                                        className="text-white bg-blue-500 rounded-lg p-2 h-fit"
-                                    >
-                                        Update Details
-                                    </Link>
                                 </div>
                             ) : (
                                 <p className="text-gray-400">

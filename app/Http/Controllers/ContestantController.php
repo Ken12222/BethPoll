@@ -53,13 +53,15 @@ class ContestantController extends Controller
             $fileName = time().".".$extensionToLower;
             $filePath = $file->storeAs("uploads", $fileName, "public");
 
-            $contestantData["image"] = "storage/" . $filePath;
+            $filePath = asset("storage/" . $filePath);
+
+            $contestantData["image"] = $filePath;
         }
 
         $newContestant = Contestant::create($contestantData);
         $contestants = Contestant::latest()->get();
         return Inertia::render('Contestant/Index',['success', 'Post created successfully.',
-        "contestants"=>$contestants,
+        "contestants"=>$contestants->withCount("votes.count")->get(),
     ]);
 
     }
@@ -69,7 +71,7 @@ class ContestantController extends Controller
      */
     public function show($id)
     {
-        $contestant = Contestant::findOrfail($id);
+        $contestant = Contestant::withCount("votes")->findOrfail($id);
         return Inertia::render("Contestant/show", [
             "contestant"=>$contestant
         ]);

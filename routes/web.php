@@ -4,7 +4,9 @@ use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\UserController;
 use App\Models\Contestant;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +19,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/users/index', [UserController::class, "index"])
+->middleware(['auth', 'verified'])->name('users');
 
 Route::get('/dashboard', [DashboardController::class, "index"])
 ->middleware(['auth', 'verified'])->name('dashboard');

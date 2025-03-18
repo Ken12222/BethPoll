@@ -85,7 +85,7 @@ export default function Dashboard({ contestants, votesCount }) {
                                             >
                                                 <img
                                                     className="w-8 h-8 my-2"
-                                                    src={presbylogo}
+                                                    src={contestant.image}
                                                     alt=""
                                                 />
 
@@ -97,12 +97,17 @@ export default function Dashboard({ contestants, votesCount }) {
                                                 </p>
 
                                                 <p>
-                                                    <span className="text-gray-400">
+                                                    <span className="text-gray-400 w-fit">
                                                         Votes
                                                     </span>
-                                                    {" " +
-                                                        contestant.votes.length}
                                                 </p>
+                                                {contestant.votes?.map(
+                                                    (vote) => (
+                                                        <p className="w-fit">
+                                                            {vote.vote}
+                                                        </p>
+                                                    )
+                                                )}
                                             </div>
                                         ))}
                                 </div>
@@ -140,8 +145,8 @@ export default function Dashboard({ contestants, votesCount }) {
                                                 className="p-6"
                                             >
                                                 <img
-                                                    className="w-36 h-36 mx-auto my-2"
-                                                    src={presbylogo}
+                                                    className="w-auto h-36 mx-auto my-2"
+                                                    src={contestant.image}
                                                     alt=""
                                                 />
                                                 <div className="flex">

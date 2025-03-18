@@ -6,8 +6,17 @@ export default function createContestant() {
     const { data, setData, post, processing, errors } = useForm({
         firstName: "",
         lastName: "",
-        image: "",
+        image: null,
     });
+
+    // Handle file selection
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setData("image", file);
+            //setPreview(URL.createObjectURL(file));
+        }
+    };
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -74,19 +83,17 @@ export default function createContestant() {
                                 </div>
 
                                 <div className="w-5/6 mx-auto">
-                                    <label htmlFor="Image">Upload Image</label>
+                                    <label className="block mt-2">Image:</label>
                                     <input
                                         type="file"
-                                        name="image"
-                                        value={data.image}
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                image: e.target.files[0],
-                                            })
-                                        }
-                                        className="w-full border-2 rounded-lg p-1"
+                                        onChange={handleFileChange}
+                                        accept="image/*"
                                     />
+                                    {errors.image && (
+                                        <p className="text-red-500">
+                                            {errors.image}
+                                        </p>
+                                    )}
                                     {errors.image && (
                                         <p className="text-red-600">
                                             {errors.image}
