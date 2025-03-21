@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 export default function contestantIndex({ contestants }) {
     const user = usePage().props.auth.user;
-    console.log(contestants);
+
     const [searchContestant, setSearchContestant] = useState("");
 
     return (
@@ -53,7 +53,10 @@ export default function contestantIndex({ contestants }) {
                                                     contestant.votes?.vote}
                                             </p>
                                             {contestant.votes?.map((vote) => (
-                                                <p>{vote.vote}</p>
+                                                <p key={vote.contestant_id}>
+                                                    {" "}
+                                                    {vote.vote}
+                                                </p>
                                             ))}
                                             <p className="px-4 my-auto rounded-sm bg-green-200 text-green-500">
                                                 First

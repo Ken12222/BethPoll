@@ -103,7 +103,12 @@ export default function Dashboard({ contestants, votesCount }) {
                                                 </p>
                                                 {contestant.votes?.map(
                                                     (vote) => (
-                                                        <p className="w-fit">
+                                                        <p
+                                                            key={
+                                                                vote.contestant_id
+                                                            }
+                                                            className="w-fit"
+                                                        >
                                                             {vote.vote}
                                                         </p>
                                                     )

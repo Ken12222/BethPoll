@@ -1,11 +1,28 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Link, usePage } from "@inertiajs/react";
+import { Link, usePage, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function UserIndex({ users }) {
     const user = usePage().props.auth.user;
-    console.log(users);
     const [searchContestant, setSearchContestant] = useState("");
+    const { data, setData, post, processing, errors } = useForm("");
+    function handleBulkUpload() {
+        if (!data) {
+            alert("Please select a file for upload");
+        }
+        const formData = new FormData();
+        formData.append("file", file);
+
+        Inertia.post("/users/bulk-upload", formData, {
+            onSuccess: () => {
+                alert("Users uploaded successfully");
+                setData(null);
+            },
+            onError: (errors) => {
+                console.log(errors);
+            },
+        });
+    }
     return (
         <>
             <AuthenticatedLayout>
@@ -20,12 +37,32 @@ export default function UserIndex({ users }) {
                                         placeholder="search contestant"
                                         className="border-0 bg-gray-100 my-4 w-2/4 rounded-lg"
                                     />
-                                    <Link
-                                        className="flex rounded-lg bg-blue-600 text-white px-6 py-2 w-fit h-fit"
-                                        href="/contestants/create"
-                                    >
-                                        Add Voter
-                                    </Link>
+                                    <div className="flex">
+                                        <Link
+                                            className="flex rounded-lg bg-blue-600 text-white px-6 py-2 w-36 h-fit"
+                                            href="/users/create"
+                                        >
+                                            Add Voter
+                                        </Link>
+                                        <form className="flex justify-end items-center">
+                                            <input
+                                                className="w-3/5 items-center "
+                                                type="file"
+                                                accept=".csv"
+                                                name="bulk_upload"
+                                                value={data.bulkUpload}
+                                                onChange={(e) =>
+                                                    setData(e.target.files)
+                                                }
+                                            />
+                                            <button
+                                                className="flex rounded-lg bg-green-600 text-white px-6 py-2 w-fit h-fit"
+                                                onClick={handleBulkUpload}
+                                            >
+                                                Upload Voters
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
 
                                 <div className=" flex justify-between px-4 py-2">

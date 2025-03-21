@@ -20,8 +20,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/users/index', [UserController::class, "index"])
-->middleware(['auth', 'verified'])->name('users');
+
+//Users data for admin
+Route::get('users/index', [UserController::class, "index"])
+->middleware(['auth', 'verified'])->name('users.index');
+Route::get('users/create', [UserController::class, "create"])
+->middleware(['auth', 'verified'])->name('users.create');
+Route::post('/users/store', [UserController::class, "store"])
+->middleware(['auth', 'verified'])->name('users.store');
+Route::post('/users/bulk-upload', [UserController::class, 'bulkUpload']);
 
 Route::get('/dashboard', [DashboardController::class, "index"])
 ->middleware(['auth', 'verified'])->name('dashboard');
