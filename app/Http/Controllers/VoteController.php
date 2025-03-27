@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VoteRequest;
 use App\Models\Contestant;
 use App\Models\Vote;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -47,32 +48,32 @@ class VoteController extends Controller
             //count number of votes by a user
             $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
             if($alreadyVotedFor){
-                return Inertia::render("Dashboard", [
+                return Inertia::render("/dashboard", [
                     "errors"=>"You have already voted for this candidate",
                     "contestants"=>Contestant::with("votes")->get(),
                     "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
                 ]); 
         }
         if($userVoteCount === 10){
-            return Inertia::render("Dashboard", [
+            return Inertia::render("/dashboard", [
                 "error"=>"You can only vote 10 candidates",
                 "message"=>"Thank You for Voting",
                 "contestants"=>Contestant::with("votes")->get(),
-                "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
+                "voteCount"=>User::withCount("votes")->where("user_id", Auth::user()->id)->get()
             ]); 
         }
 
             $newVote = Vote::create($voteData);
             if($newVote){
-                return Inertia::render("Dashboard", [
+                return Inertia::render("/dashboard", [
                     "message"=>"You have successfully voted",
                     "contestants"=>Contestant::with("votes")->get(),
-                    "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
+                    "voteCount"=>Vote::withCount("votes")->where("user_id", Auth::user()->id)->get()
                 ]); 
             }
-            return Inertia::render("dashboard", [
+            return Inertia::render("/dashboard", [
                 "contestants"=>Contestant::withCount("votes")->get(),
-                "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
+                "voteCount"=>User::withCount("votes")->where("user_id", Auth::user()->id)->get()
             ]); 
     }
 

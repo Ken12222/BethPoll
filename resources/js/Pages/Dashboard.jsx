@@ -15,6 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { redirect } from "react-router-dom";
 
 export default function Dashboard({ contestants, votesCount }) {
     const user = usePage().props.auth.user;
@@ -22,6 +23,8 @@ export default function Dashboard({ contestants, votesCount }) {
         contestant_id: "",
         vote: 1,
     });
+
+    const date = new Date();
 
     //handle Export
     const exportPDF = () => {
@@ -53,8 +56,14 @@ export default function Dashboard({ contestants, votesCount }) {
         setData("vote", 1);
 
         post("/votes");
+
+        router.visit("/dashboard");
     };
-    const date = new Date();
+    function handleLogout(e) {
+        //e.preventDefault();
+
+        post("logout");
+    }
 
     return (
         <AuthenticatedLayout
@@ -139,17 +148,11 @@ export default function Dashboard({ contestants, votesCount }) {
                                                             </TableCell>
 
                                                             <TableCell>
-                                                                {console.log(
-                                                                    contestant
-                                                                )}
                                                                 {
                                                                     contestant
                                                                         .votes
                                                                         .length
                                                                 }
-                                                                {console.log(
-                                                                    contestants
-                                                                )}
                                                             </TableCell>
                                                         </TableRow>
                                                     )
@@ -181,12 +184,18 @@ export default function Dashboard({ contestants, votesCount }) {
             ) : (
                 <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        {console.log(votesCount)}
                         {votesCount === 10 ? (
-                            <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div className="flex justify-center items-center overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                 <p className="text-green-400 flex justify-center p-8">
                                     Thank You for voting
                                 </p>
+                                <button
+                                    name="logout"
+                                    className="h-fit bg-blue-400 px-4 py-2 text-white rounded-lg"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
                             </div>
                         ) : (
                             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
