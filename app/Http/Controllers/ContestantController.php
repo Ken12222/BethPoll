@@ -59,9 +59,9 @@ class ContestantController extends Controller
         }
 
         $newContestant = Contestant::create($contestantData);
-        $contestants = Contestant::latest()->get();
+        //$contestants = Contestant::latest()->get();
         return Inertia::render('Contestant/Index',['success', 'Post created successfully.',
-        "contestants"=>$contestants->withCount("votes.count")->get(),
+        "contestants"=>Contestant::withCount("votes")->get(),
     ]);
 
     }

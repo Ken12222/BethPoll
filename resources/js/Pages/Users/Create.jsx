@@ -6,7 +6,7 @@ export default function createContestant() {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         membership_id: "",
-        password: "",
+        password: "password",
     });
 
     function handleSubmit(e) {
@@ -79,9 +79,9 @@ export default function createContestant() {
                                 </div>
 
                                 <div className="w-5/6 mx-auto">
-                                    <label htmlFor="password">Password</label>
+                                    {/* <label htmlFor="password">Password</label> */}
                                     <input
-                                        type="password"
+                                        type="hidden"
                                         value={data.password}
                                         onChange={(e) =>
                                             setData({

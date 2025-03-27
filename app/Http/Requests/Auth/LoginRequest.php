@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'membership_id' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            //'password' => ['required', 'string'],
         ];
     }
 

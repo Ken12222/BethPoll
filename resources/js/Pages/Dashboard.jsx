@@ -5,6 +5,17 @@ import { useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+
 export default function Dashboard({ contestants, votesCount }) {
     const user = usePage().props.auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -43,6 +54,7 @@ export default function Dashboard({ contestants, votesCount }) {
 
         post("/votes");
     };
+    const date = new Date();
 
     return (
         <AuthenticatedLayout
@@ -77,44 +89,93 @@ export default function Dashboard({ contestants, votesCount }) {
                                     id="print-section"
                                     className="w-full  grid grid-cols my-8"
                                 >
-                                    {contestants &&
-                                        contestants.map((contestant) => (
-                                            <div
-                                                key={contestant.id}
-                                                className="flex items-center gap-2 border-b"
-                                            >
-                                                <img
-                                                    className="w-8 h-8 my-2"
-                                                    src={contestant.image}
-                                                    alt=""
-                                                />
-
-                                                <p className="pr-4">
-                                                    {contestant.firstName +
-                                                        " " +
-                                                        contestant.lastName +
-                                                        " "}
-                                                </p>
-
-                                                <p>
-                                                    <span className="text-gray-400 w-fit">
-                                                        Votes
-                                                    </span>
-                                                </p>
-                                                {contestant.votes?.map(
-                                                    (vote) => (
-                                                        <p
-                                                            key={
-                                                                vote.contestant_id
-                                                            }
-                                                            className="w-fit"
+                                    <Table>
+                                        <TableCaption>
+                                            Final Results From the Bethlehem
+                                            Poll {date.getFullYear()}
+                                        </TableCaption>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead className="w-[100px]">
+                                                    ID
+                                                </TableHead>
+                                                <TableHead>Image</TableHead>
+                                                <TableHead>Firstname</TableHead>
+                                                <TableHead>Lastname</TableHead>
+                                                <TableHead className="text-left">
+                                                    Votes Count
+                                                </TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {Array.isArray(contestants) &&
+                                            contestants.length > 0 ? (
+                                                contestants.map(
+                                                    (contestant) => (
+                                                        <TableRow
+                                                            key={contestant.id}
                                                         >
-                                                            {vote.vote}
-                                                        </p>
+                                                            <TableCell className="font-medium">
+                                                                {contestant.id}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <img
+                                                                    className="w-8 h-8 my-2"
+                                                                    src={
+                                                                        contestant.image
+                                                                    }
+                                                                    alt=""
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell className="font-medium">
+                                                                {
+                                                                    contestant.firstName
+                                                                }
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {
+                                                                    contestant.lastName
+                                                                }
+                                                            </TableCell>
+
+                                                            <TableCell>
+                                                                {contestant.votes?.map(
+                                                                    (vote) => (
+                                                                        <p
+                                                                            key={
+                                                                                vote.contestant_id
+                                                                            }
+                                                                        >
+                                                                            {" "}
+                                                                            {
+                                                                                vote.vote
+                                                                            }
+                                                                        </p>
+                                                                    )
+                                                                )}
+                                                            </TableCell>
+                                                        </TableRow>
                                                     )
-                                                )}
-                                            </div>
-                                        ))}
+                                                )
+                                            ) : (
+                                                <p className="text-gray-400 flex justify-center p-4">
+                                                    There are no Contestants Yet
+                                                </p>
+                                            )}
+                                        </TableBody>
+
+                                        <TableFooter>
+                                            <TableRow>
+                                                <TableCell>
+                                                    Total Votes
+                                                </TableCell>
+
+                                                <TableCell className="text-right">
+                                                    200
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableFooter>
+                                    </Table>
                                 </div>
                             </div>
                         </div>

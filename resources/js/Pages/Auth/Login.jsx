@@ -9,7 +9,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         membership_id: "",
-        password: "",
+        password: "password",
         remember: false,
     });
 
@@ -36,7 +36,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputLabel htmlFor="Membership Id" value="Membership Id" />
 
                     <TextInput
-                        id="email"
+                        id="membership_id"
                         type="text"
                         name="membership_id"
                         value={data.email}
@@ -55,11 +55,11 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    {/* <InputLabel htmlFor="password" value="Password" /> */}
 
                     <TextInput
                         id="password"
-                        type="password"
+                        type="hidden"
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
@@ -70,7 +70,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 block">
+                {/* <div className="mt-4 block">
                     <label className="flex items-center">
                         <Checkbox
                             name="remember"
@@ -83,17 +83,17 @@ export default function Login({ status, canResetPassword }) {
                             Remember me
                         </span>
                     </label>
-                </div>
+                </div> */}
 
                 <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
+                    {/* {canResetPassword && (
                         <Link
                             href={route("register")}
                             className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Register
                         </Link>
-                    )}
+                    )} */}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in

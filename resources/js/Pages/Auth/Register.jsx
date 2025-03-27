@@ -9,8 +9,8 @@ export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         membership_id: "",
-        password: "",
-        password_confirmation: "",
+        password: "password",
+        password_confirmation: "password",
     });
 
     const submit = (e) => {
@@ -47,7 +47,7 @@ export default function Register() {
                     <InputLabel htmlFor="membership ID" value="Membership ID" />
 
                     <TextInput
-                        id="email"
+                        id="membership_id"
                         type="text"
                         name="membership_id"
                         value={data.email}
@@ -70,7 +70,7 @@ export default function Register() {
 
                     <TextInput
                         id="password"
-                        type="password"
+                        type="hidden"
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
@@ -90,7 +90,7 @@ export default function Register() {
 
                     <TextInput
                         id="password_confirmation"
-                        type="password"
+                        type="hidden"
                         name="password_confirmation"
                         value={data.password_confirmation}
                         className="mt-1 block w-full"

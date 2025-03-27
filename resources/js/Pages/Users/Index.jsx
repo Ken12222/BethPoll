@@ -2,6 +2,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, usePage, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+
 export default function UserIndex({ users }) {
     const user = usePage().props.auth.user;
     const [searchContestant, setSearchContestant] = useState("");
@@ -49,7 +60,7 @@ export default function UserIndex({ users }) {
                                                 className="w-3/5 items-center "
                                                 type="file"
                                                 accept=".csv"
-                                                name="bulk_upload"
+                                                name="file"
                                                 value={data.bulkUpload}
                                                 onChange={(e) =>
                                                     setData(e.target.files)
@@ -61,29 +72,57 @@ export default function UserIndex({ users }) {
                                             >
                                                 Upload Voters
                                             </button>
+                                            <p>{errors && errors.error}</p>
                                         </form>
                                     </div>
                                 </div>
 
-                                <div className=" flex justify-between px-4 py-2">
-                                    <p className="pr-4 text-gray-400">Name</p>
+                                <Table>
+                                    <TableCaption className="mb-4">
+                                        Voters For the 2025 Bethlehem
+                                        Congregation Elections
+                                    </TableCaption>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[100px]">
+                                                ID
+                                            </TableHead>
+                                            <TableHead>Voter Name</TableHead>
+                                            <TableHead>Membership ID</TableHead>
 
-                                    <p className="pr-4 text-gray-400">Action</p>
-                                </div>
-                                {Array.isArray(users) && users.length > 0 ? (
-                                    users.map((user) => (
-                                        <div
-                                            key={user.id}
-                                            className="flex justify-between px-4 pb-2 border-b mb-2"
-                                        >
-                                            <p className="pr-4">{user.name}</p>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="text-gray-400 flex justify-center p-4">
-                                        There are no users Yet
-                                    </p>
-                                )}
+                                            <TableHead className="text-left">
+                                                Vote Status
+                                            </TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {Array.isArray(users) &&
+                                        users.length > 0 ? (
+                                            users.map((user) => (
+                                                <TableRow key={user.id}>
+                                                    <TableCell className="font-medium">
+                                                        {user.id}
+                                                    </TableCell>
+
+                                                    <TableCell className="font-medium">
+                                                        {user.name}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {user.membership_id}
+                                                    </TableCell>
+
+                                                    <TableCell>
+                                                        {user.vote_count}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-400 flex justify-center p-4">
+                                                There are no Contestants Yet
+                                            </p>
+                                        )}
+                                    </TableBody>
+                                </Table>
                             </div>
                         </div>
                     </div>
