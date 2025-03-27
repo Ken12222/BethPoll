@@ -91,7 +91,7 @@ export default function UserIndex({ users }) {
                                             <TableHead>Membership ID</TableHead>
 
                                             <TableHead className="text-left">
-                                                Vote Status
+                                                Votes Cast
                                             </TableHead>
                                         </TableRow>
                                     </TableHeader>

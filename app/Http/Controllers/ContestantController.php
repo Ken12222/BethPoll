@@ -42,7 +42,7 @@ class ContestantController extends Controller
         ->where("lastName", $contestantData["lastName"])->first();
 
         if($checkifContestantExists){
-            return Inertia::render('/createContestant', ['failed'=>'Candidate already exists.']);
+            return Inertia::render('/createContestant', ['error'=>'Candidate already exists.']);
         }
 
         if($request->hasFile("image")){
