@@ -17,7 +17,7 @@ class VoteController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Votes.Index", [
+        return Inertia::render("/dashboard", [
             "contestants"=>Contestant::all(),
             "votes"=>Vote::all()
         ]);
@@ -50,7 +50,7 @@ class VoteController extends Controller
                 return Inertia::render("Dashboard", [
                     "errors"=>"You have already voted for this candidate",
                     "contestants"=>Contestant::with("votes")->get(),
-                    "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+                    "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
                 ]); 
         }
         if($userVoteCount === 10){
@@ -58,7 +58,7 @@ class VoteController extends Controller
                 "error"=>"You can only vote 10 candidates",
                 "message"=>"Thank You for Voting",
                 "contestants"=>Contestant::with("votes")->get(),
-                "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+                "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
             ]); 
         }
 
@@ -67,11 +67,12 @@ class VoteController extends Controller
                 return Inertia::render("Dashboard", [
                     "message"=>"You have successfully voted",
                     "contestants"=>Contestant::with("votes")->get(),
-                    "vote"=>Vote::where("user_id", Auth::user()->id)->get()
+                    "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
                 ]); 
             }
-            return Inertia::render("Dashboard", [
-                "contestants"=>Contestant::with("votes")->get(),
+            return Inertia::render("dashboard", [
+                "contestants"=>Contestant::withCount("votes")->get(),
+                "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
             ]); 
     }
 

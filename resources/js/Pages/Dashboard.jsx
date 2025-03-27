@@ -139,19 +139,16 @@ export default function Dashboard({ contestants, votesCount }) {
                                                             </TableCell>
 
                                                             <TableCell>
-                                                                {contestant.votes?.map(
-                                                                    (vote) => (
-                                                                        <p
-                                                                            key={
-                                                                                vote.contestant_id
-                                                                            }
-                                                                        >
-                                                                            {" "}
-                                                                            {
-                                                                                vote.vote
-                                                                            }
-                                                                        </p>
-                                                                    )
+                                                                {console.log(
+                                                                    contestant
+                                                                )}
+                                                                {
+                                                                    contestant
+                                                                        .votes
+                                                                        .length
+                                                                }
+                                                                {console.log(
+                                                                    contestants
                                                                 )}
                                                             </TableCell>
                                                         </TableRow>
@@ -184,6 +181,7 @@ export default function Dashboard({ contestants, votesCount }) {
             ) : (
                 <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        {console.log(votesCount)}
                         {votesCount === 10 ? (
                             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                 <p className="text-green-400 flex justify-center p-8">
@@ -215,7 +213,22 @@ export default function Dashboard({ contestants, votesCount }) {
                                                     src={contestant.image}
                                                     alt=""
                                                 />
-                                                <div className="flex">
+                                                <div className="flex items-center">
+                                                    <input
+                                                        className="mr-2"
+                                                        type="radio"
+                                                        name="contestant_id"
+                                                        value={
+                                                            data.contestant_id
+                                                        }
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                contestant_id:
+                                                                    contestant.id,
+                                                            })
+                                                        }
+                                                    />
                                                     <p>
                                                         {contestant.firstName}
                                                     </p>
@@ -242,21 +255,6 @@ export default function Dashboard({ contestants, votesCount }) {
                                                             )
                                                         }
                                                     >
-                                                        <input
-                                                            type="radio"
-                                                            name="contestant_id"
-                                                            value={
-                                                                data.contestant_id
-                                                            }
-                                                            onChange={(e) =>
-                                                                setData({
-                                                                    ...data,
-                                                                    contestant_id:
-                                                                        contestant.id,
-                                                                })
-                                                            }
-                                                        />
-
                                                         <button className="bg-green-500 text-white px-4 py-1 w-full">
                                                             {processing
                                                                 ? "Voting..."

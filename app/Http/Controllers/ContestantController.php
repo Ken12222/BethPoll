@@ -16,7 +16,7 @@ class ContestantController extends Controller
      */
     public function index()
     {
-        $contestants = Contestant::with("votes")->latest()->get();
+        $contestants = Contestant::withCount("votes")->latest()->get();
 
         return Inertia::render("Contestant/Index", [
             "contestants"=>$contestants
