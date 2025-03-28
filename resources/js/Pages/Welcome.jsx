@@ -1,6 +1,7 @@
 import { Head, Link } from "@inertiajs/react";
 import presby_logo from "../../images/pcg_logo.png";
 import bgImage from "../../images/bgg.jpg";
+import React from "react";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleImageError = () => {

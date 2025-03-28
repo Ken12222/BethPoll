@@ -1,4 +1,5 @@
 import pcg_logo from "../../images/pcg_logo.png";
+import React from "react";
 
 export default function ApplicationLogo(props) {
     return (
