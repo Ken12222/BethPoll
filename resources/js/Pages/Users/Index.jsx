@@ -2,16 +2,16 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, usePage, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../../components/ui/table";
+// import {
+//     Table,
+//     TableBody,
+//     TableCaption,
+//     TableCell,
+//     TableFooter,
+//     TableHead,
+//     TableHeader,
+//     TableRow,
+// } from "../../components/ui/table";
 
 export default function UserIndex({ users }) {
     const user = usePage().props.auth.user;
@@ -77,7 +77,48 @@ export default function UserIndex({ users }) {
                                     </div>
                                 </div>
 
-                                <Table>
+                                <table className="w-full mx-4 mb-4">
+                                    <tbody>
+                                        <tr className="w-full ">
+                                            <th className="text-left py-4 text-gray-400">
+                                                ID
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Firstname
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Lastname
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Votes Count
+                                            </th>
+                                        </tr>
+                                        {Array.isArray(users) &&
+                                        users.length > 0 ? (
+                                            users.map((user) => (
+                                                <tr
+                                                    key={user.id}
+                                                    className="w-full border-b"
+                                                >
+                                                    <td className="text-left py-2">
+                                                        {user.id}
+                                                    </td>
+                                                    <td>{user.name}</td>
+                                                    <td>
+                                                        {user.membership_id}
+                                                    </td>
+                                                    <td>{user.vote_count}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-400 flex justify-center p-4">
+                                                There are no Contestants Yet
+                                            </p>
+                                        )}
+                                    </tbody>
+                                </table>
+
+                                {/* <Table>
                                     <TableCaption className="mb-4">
                                         Voters For the 2025 Bethlehem
                                         Congregation Elections
@@ -122,7 +163,7 @@ export default function UserIndex({ users }) {
                                             </p>
                                         )}
                                     </TableBody>
-                                </Table>
+                                </Table> */}
                             </div>
                         </div>
                     </div>

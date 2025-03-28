@@ -2,16 +2,16 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, router, usePage } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../../components/ui/table";
+// import {
+//     Table,
+//     TableBody,
+//     TableCaption,
+//     TableCell,
+//     TableFooter,
+//     TableHead,
+//     TableHeader,
+//     TableRow,
+// } from "../../components/ui/table";
 
 export default function contestantIndex({ contestants }) {
     const user = usePage().props.auth.user;
@@ -39,7 +39,62 @@ export default function contestantIndex({ contestants }) {
                                         Add Contestant
                                     </Link>
                                 </div>
-                                <Table>
+                                <table className="w-full mx-4 mb-4">
+                                    <tbody>
+                                        <tr className="w-full ">
+                                            <th className="text-left py-4 text-gray-400">
+                                                ID
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Firstname
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Lastname
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Votes Count
+                                            </th>
+                                        </tr>
+                                        {Array.isArray(contestants) &&
+                                        contestants.length > 0 ? (
+                                            contestants.map((contestant) => (
+                                                <tr
+                                                    key={contestant.id}
+                                                    className="w-full border-b"
+                                                >
+                                                    <td className="text-left py-2">
+                                                        {contestant.id}
+                                                    </td>
+                                                    <td>
+                                                        {contestant.firstName}
+                                                    </td>
+                                                    <td>
+                                                        {contestant.lastName}
+                                                    </td>
+                                                    <td>
+                                                        {contestant.votes?.map(
+                                                            (vote) => (
+                                                                <p
+                                                                    key={
+                                                                        vote.contestant_id
+                                                                    }
+                                                                >
+                                                                    {" "}
+                                                                    {vote.vote}
+                                                                </p>
+                                                            )
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-400 flex justify-center p-4">
+                                                There are no Contestants Yet
+                                            </p>
+                                        )}
+                                    </tbody>
+                                </table>
+                                {/* <Table>
                                     <TableCaption>
                                         A list of your recent invoices.
                                     </TableCaption>
@@ -102,7 +157,7 @@ export default function contestantIndex({ contestants }) {
                                             </TableCell>
                                         </TableRow>
                                     </TableFooter>
-                                </Table>
+                                </Table> */}
                             </div>
                         </div>
                     </div>

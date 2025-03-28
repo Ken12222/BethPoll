@@ -6,16 +6,16 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import React from "react";
 
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../components/ui/table";
+// import {
+//     Table,
+//     TableBody,
+//     TableCaption,
+//     TableCell,
+//     TableFooter,
+//     TableHead,
+//     TableHeader,
+//     TableRow,
+// } from "../components/ui/table";
 import { redirect } from "react-router-dom";
 
 export default function Dashboard({ contestants, votesCount }) {
@@ -99,7 +99,73 @@ export default function Dashboard({ contestants, votesCount }) {
                                     id="print-section"
                                     className="w-full  grid grid-cols my-8"
                                 >
-                                    <Table>
+                                    <table className="w-full mx-4 mb-4">
+                                        <tbody>
+                                            <tr className="w-full ">
+                                                <th className="text-left py-4 text-gray-400">
+                                                    ID
+                                                </th>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Image
+                                                </th>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Firstname
+                                                </th>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Lastname
+                                                </th>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Votes Count
+                                                </th>
+                                            </tr>
+                                            {Array.isArray(contestants) &&
+                                            contestants.length > 0 ? (
+                                                contestants.map(
+                                                    (contestant) => (
+                                                        <tr
+                                                            key={contestant.id}
+                                                            className="w-full border-b"
+                                                        >
+                                                            <td className="text-left py-2">
+                                                                {contestant.id}
+                                                            </td>
+                                                            <td>
+                                                                <img
+                                                                    className="w-8 h-8 my-2"
+                                                                    src={
+                                                                        contestant.image
+                                                                    }
+                                                                    alt="contestant_profile"
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    contestant.firstName
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    contestant.lastName
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    contestant
+                                                                        .votes
+                                                                        .length
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                )
+                                            ) : (
+                                                <p className="text-gray-400 flex justify-center p-4">
+                                                    There are no Contestants Yet
+                                                </p>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                    {/* <Table>
                                         <TableCaption>
                                             Final Results From the Bethlehem
                                             Poll {date.getFullYear()}
@@ -176,7 +242,7 @@ export default function Dashboard({ contestants, votesCount }) {
                                                 </TableCell>
                                             </TableRow>
                                         </TableFooter>
-                                    </Table>
+                                    </Table> */}
                                 </div>
                             </div>
                         </div>
