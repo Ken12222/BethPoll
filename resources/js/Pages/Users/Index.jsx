@@ -11,7 +11,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
+} from "../../components/ui/table";
 
 export default function UserIndex({ users }) {
     const user = usePage().props.auth.user;

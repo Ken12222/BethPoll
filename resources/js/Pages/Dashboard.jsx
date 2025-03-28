@@ -14,7 +14,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
+} from "../components/ui/table";
 import { redirect } from "react-router-dom";
 
 export default function Dashboard({ contestants, votesCount }) {
