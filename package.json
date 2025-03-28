@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
         "postinstall": "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && composer install && php artisan migrate --force"
     },
     "devDependencies": {
