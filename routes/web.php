@@ -30,7 +30,7 @@ Route::post('/users/store', [UserController::class, "store"])
 ->middleware(['auth', 'verified'])->name('users.store');
 Route::post('/users/bulk-upload', [UserController::class, 'bulkUpload']);
 
-Route::get('Dashboard', [DashboardController::class, "index"])
+Route::get('/dashboard', [DashboardController::class, "index"])
 ->middleware(['auth', 'verified'])->name('dashboard');
 
 
