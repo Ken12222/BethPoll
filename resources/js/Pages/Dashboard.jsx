@@ -86,7 +86,6 @@ export default function Dashboard({ contestants, votesCount }) {
                                 >
                                     Export
                                 </button>
-                                <>Hello</>
                                 <button
                                     onClick={handlePrint}
                                     className="border mx-4 px-4 py-1 hover:bg-gray-50"
