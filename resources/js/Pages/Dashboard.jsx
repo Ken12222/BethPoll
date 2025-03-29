@@ -25,8 +25,6 @@ export default function Dashboard({ contestants, votesCount }) {
         vote: 1,
     });
 
-    const date = new Date();
-
     //handle Export
     const exportPDF = () => {
         const input = document.getElementById("print-section");
@@ -56,9 +54,11 @@ export default function Dashboard({ contestants, votesCount }) {
         setData("contestant_id", contestantId);
         setData("vote", 1);
 
-        post("/votes");
-
-        router.visit("/dashboard");
+        post("/votes", {
+            headers: {
+                "Content-Type": "Application/json",
+            },
+        });
     };
     function handleLogout(e) {
         //e.preventDefault();
@@ -118,6 +118,7 @@ export default function Dashboard({ contestants, votesCount }) {
                                                     Votes Count
                                                 </th>
                                             </tr>
+                                            {console.log(contestants)}
                                             {Array.isArray(contestants) &&
                                             contestants.length > 0 ? (
                                                 contestants.map(
@@ -137,9 +138,6 @@ export default function Dashboard({ contestants, votesCount }) {
                                                                     }
                                                                     alt="contestant_profile"
                                                                 />
-                                                                {
-                                                                    contestant.image
-                                                                }
                                                             </td>
                                                             <td>
                                                                 {
@@ -287,11 +285,11 @@ export default function Dashboard({ contestants, votesCount }) {
                                                 key={contestant.id}
                                                 className="p-6"
                                             >
-                                                <img
-                                                    className="w-auto h-36 mx-auto my-2"
-                                                    src={contestant.image}
-                                                    alt=""
-                                                />
+                                                {/* <img
+                                                        className="w-auto h-36 mx-auto my-2"
+                                                        src={contestant.image}
+                                                        alt=""
+                                                    /> */}
                                                 <div className="flex items-center">
                                                     <input
                                                         className="mr-2"

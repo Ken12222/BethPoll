@@ -18,7 +18,7 @@ class VoteController extends Controller
      */
     public function index()
     {
-        return Inertia::render("/dashboard", [
+        return Inertia::render("Dashboard", [
             "contestants"=>Contestant::all(),
             "votes"=>Vote::all()
         ]);
@@ -37,6 +37,7 @@ class VoteController extends Controller
      */
     public function store(VoteRequest $request)
     {
+
         if(Auth::user()->role === "user"){
             $voteData = $request->validated();
             $voteData["user_id"] = Auth::user()->id;
@@ -45,35 +46,37 @@ class VoteController extends Controller
             $alreadyVotedFor = Vote::where("contestant_id", $voteData["contestant_id"])
             ->where("user_id", Auth::user()->id)->first();
             
-            //count number of votes by a user
-            $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
             if($alreadyVotedFor){
-                return Inertia::render("/dashboard", [
+                return Inertia::render("Dashboard", [
                     "errors"=>"You have already voted for this candidate",
                     "contestants"=>Contestant::with("votes")->get(),
-                    "voteCount"=>Vote::withCount("Vote")->where("user_id", Auth::user()->id)->get()
+                    "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
                 ]); 
-        }
+            }
+            //count number of votes by a user
+            $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
         if($userVoteCount === 10){
-            return Inertia::render("/dashboard", [
+            return Inertia::render("Dashboard", [
                 "error"=>"You can only vote 10 candidates",
                 "message"=>"Thank You for Voting",
                 "contestants"=>Contestant::with("votes")->get(),
-                "voteCount"=>User::withCount("votes")->where("user_id", Auth::user()->id)->get()
+                "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
             ]); 
         }
 
-            $newVote = Vote::create($voteData);
-            if($newVote){
-                return Inertia::render("/dashboard", [
+            
+            if(Vote::create($voteData)){
+                return Inertia::render("Dashboard", [
                     "message"=>"You have successfully voted",
                     "contestants"=>Contestant::with("votes")->get(),
-                    "voteCount"=>Vote::withCount("votes")->where("user_id", Auth::user()->id)->get()
+                    "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
                 ]); 
             }
-            return Inertia::render("/dashboard", [
+
+            return Inertia::render("Dashboard", [
+                "Falied"=>"Failed to Process vote, try again",
                 "contestants"=>Contestant::withCount("votes")->get(),
-                "voteCount"=>User::withCount("votes")->where("user_id", Auth::user()->id)->get()
+                "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
             ]); 
     }
 

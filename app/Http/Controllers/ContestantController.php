@@ -51,15 +51,15 @@ class ContestantController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $extensionToLower = strtolower($fileExtension);
             $fileName = time().".".$extensionToLower;
-            $file->storeAs("app/public/uploads/", $fileName);
+            $file->storeAs('public/uploads', $fileName);
 
-            $filePath = asset("storage/uploads/" . $fileName);
+            $imageUrl = asset('storage/uploads/'.$fileName);
 
-            $contestantData["image"] = $filePath;
+            $contestantData["image"] = $imageUrl;
         }
 
         $newContestant = Contestant::create($contestantData);
-        //$contestants = Contestant::latest()->get();
+
         return Inertia::render('Contestant/Index',['success', 'Post created successfully.',
         "contestants"=>Contestant::withCount("votes")->get(),
     ]);
