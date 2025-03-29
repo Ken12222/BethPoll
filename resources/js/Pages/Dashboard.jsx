@@ -137,6 +137,9 @@ export default function Dashboard({ contestants, votesCount }) {
                                                                     }
                                                                     alt="contestant_profile"
                                                                 />
+                                                                {
+                                                                    contestant.image
+                                                                }
                                                             </td>
                                                             <td>
                                                                 {
