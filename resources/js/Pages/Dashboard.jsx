@@ -18,7 +18,11 @@ import React from "react";
 // } from "../components/ui/table";
 import { redirect } from "react-router-dom";
 
-export default function Dashboard({ contestants, votesCount }) {
+export default function Dashboard({
+    contestants,
+    votesCount,
+    totalVoteReached,
+}) {
     const user = usePage().props.auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
         contestant_id: "",
@@ -252,10 +256,10 @@ export default function Dashboard({ contestants, votesCount }) {
             ) : (
                 <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        {votesCount === 10 ? (
+                        {totalVoteReached || votesCount == 10 ? (
                             <div className="flex justify-center items-center overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                 <p className="text-green-400 flex justify-center p-8">
-                                    Thank You for voting
+                                    Thank You for Voting
                                 </p>
                                 <button
                                     name="logout"

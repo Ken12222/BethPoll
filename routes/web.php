@@ -56,7 +56,7 @@ Route::delete('/contestants/{contestant}', [ContestantController::class, "destro
 //contestant routes
 
 //Vote routes
-Route::get('/votes.index', [ContestantController::class, "index"]
+Route::get('/votes', [ContestantController::class, "index"]
 )->middleware(['auth', 'verified'])->name('votes.index');
 
 Route::post("/votes", [VoteController::class, "store"])->middleware(['auth', 'verified'])->name('vote.store');

@@ -19,7 +19,7 @@ class VoteController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard", [
-            "contestants"=>Contestant::all(),
+            "contestants"=>Contestant::with("votes")->get(),
             "votes"=>Vote::all()
         ]);
     }
@@ -54,10 +54,10 @@ class VoteController extends Controller
                 ]); 
             }
             //count number of votes by a user
-            $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
+        $userVoteCount = Vote::where("user_id", Auth::user()->id)->count();
         if($userVoteCount === 10){
             return Inertia::render("Dashboard", [
-                "error"=>"You can only vote 10 candidates",
+                "totalVoteReached"=>"You can only vote 10 candidates",
                 "message"=>"Thank You for Voting",
                 "contestants"=>Contestant::with("votes")->get(),
                 "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
@@ -65,7 +65,14 @@ class VoteController extends Controller
         }
 
             
-            if(Vote::create($voteData)){
+            if(Vote::create($voteData) && $userVoteCount === 9){
+
+                return Inertia::render("Dashboard", [
+                    "totalVoteReached"=>"You can only vote 10 candidates",
+                    "contestants"=>Contestant::with("votes")->get(),
+                    "voteCount"=>Vote::where("user_id", Auth::user()->id)->count()
+                ]); 
+            }else{
                 return Inertia::render("Dashboard", [
                     "message"=>"You have successfully voted",
                     "contestants"=>Contestant::with("votes")->get(),
