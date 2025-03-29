@@ -10,7 +10,7 @@ export default defineConfig({
         }),
         react(),
     ],
-    build: {
-        outDir: "public/build",
+    server: {
+        https: true,
     },
 });
