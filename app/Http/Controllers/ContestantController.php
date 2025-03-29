@@ -51,9 +51,9 @@ class ContestantController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $extensionToLower = strtolower($fileExtension);
             $fileName = time().".".$extensionToLower;
-            $filePath = $file->storeAs("uploads", $fileName, "public");
+            $filePath = $file->storeAs("public/uploads", $fileName);
 
-            $filePath = asset("storage/" . $filePath);
+            $filePath = asset("storage/uploads" . $fileName);
 
             $contestantData["image"] = $filePath;
         }
