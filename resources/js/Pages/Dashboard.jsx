@@ -160,84 +160,6 @@ export default function Dashboard({
                                             )}
                                         </tbody>
                                     </table>
-                                    {/* <Table>
-                                        <TableCaption>
-                                            Final Results From the Bethlehem
-                                            Poll {date.getFullYear()}
-                                        </TableCaption>
-                                        <TableHeader>
-                                            <TableRow>
-                                                <TableHead className="w-[100px]">
-                                                    ID
-                                                </TableHead>
-                                                <TableHead>Image</TableHead>
-                                                <TableHead>Firstname</TableHead>
-                                                <TableHead>Lastname</TableHead>
-                                                <TableHead className="text-left">
-                                                    Votes Count
-                                                </TableHead>
-                                            </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {Array.isArray(contestants) &&
-                                            contestants.length > 0 ? (
-                                                contestants.map(
-                                                    (contestant) => (
-                                                        <TableRow
-                                                            key={contestant.id}
-                                                        >
-                                                            <TableCell className="font-medium">
-                                                                {contestant.id}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <img
-                                                                    className="w-8 h-8 my-2"
-                                                                    src={
-                                                                        contestant.image
-                                                                    }
-                                                                    alt=""
-                                                                />
-                                                            </TableCell>
-                                                            <TableCell className="font-medium">
-                                                                {
-                                                                    contestant.firstName
-                                                                }
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {
-                                                                    contestant.lastName
-                                                                }
-                                                            </TableCell>
-
-                                                            <TableCell>
-                                                                {
-                                                                    contestant
-                                                                        .votes
-                                                                        .length
-                                                                }
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                )
-                                            ) : (
-                                                <p className="text-gray-400 flex justify-center p-4">
-                                                    There are no Contestants Yet
-                                                </p>
-                                            )}
-                                        </TableBody>
-
-                                        <TableFooter>
-                                            <TableRow>
-                                                <TableCell>
-                                                    Total Votes
-                                                </TableCell>
-
-                                                <TableCell className="text-right">
-                                                    200
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableFooter>
-                                    </Table> */}
                                 </div>
                             </div>
                         </div>
@@ -279,11 +201,11 @@ export default function Dashboard({
                                                 key={contestant.id}
                                                 className="p-6"
                                             >
-                                                {/* <img
-                                                        className="w-auto h-36 mx-auto my-2"
-                                                        src={contestant.image}
-                                                        alt=""
-                                                    /> */}
+                                                <img
+                                                    className="w-auto h-36 mx-auto my-2"
+                                                    src={contestant.image}
+                                                    alt=""
+                                                />
                                                 <div className="flex items-center">
                                                     <input
                                                         className="mr-2"

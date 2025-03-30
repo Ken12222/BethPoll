@@ -31,11 +31,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <div className="flex justify-between w-full mx-auto">
                             <Link
                                 href={route("dashboard")}
-                                className="rounded-md  px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                className="rounded-md  px-3 py-2 bg-blue-500 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                             >
-                                BethPoll
+                                Dashboard
                             </Link>
-                            <p>Hello</p>
                         </div>
                     ) : (
                         <>
