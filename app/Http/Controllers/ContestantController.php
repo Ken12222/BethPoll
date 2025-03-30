@@ -7,6 +7,7 @@ use App\Models\Contestant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Storage;
 
 
 class ContestantController extends Controller
@@ -51,9 +52,10 @@ class ContestantController extends Controller
             $fileExtension = $file->getClientOriginalExtension();
             $extensionToLower = strtolower($fileExtension);
             $fileName = time().".".$extensionToLower;
-            $file->storeAs('public/uploads', $fileName);
+            $path = $file->storeAs('upload', $fileName, 'public');
+            Storage::disk('public')->put($fileName, $fileName);
 
-            $imageUrl = asset('storage/uploads/'.$fileName);
+            $imageUrl = asset('storage/upload/'.$fileName);
 
             $contestantData["image"] = $imageUrl;
         }
