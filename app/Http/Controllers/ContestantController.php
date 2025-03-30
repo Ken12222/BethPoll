@@ -53,7 +53,7 @@ class ContestantController extends Controller
             $extensionToLower = strtolower($fileExtension);
             $fileName = time().".".$extensionToLower;
             $path = $file->storeAs('upload', $fileName, 'public');
-            Storage::disk('public')->put($fileName, $fileName);
+            Storage::disk('public')->put("upload", $fileName);
 
             $imageUrl = asset('storage/upload/'.$fileName);
 
