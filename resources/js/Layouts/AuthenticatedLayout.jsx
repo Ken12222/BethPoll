@@ -28,7 +28,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 {user.role === "admin" ? (
                                     <>
                                         <NavLink
-                                            href="Dashboard"
+                                            href="/Dashboard"
                                             //href={route("Dashboard")}
                                             active={route().current(
                                                 "dashboard"
@@ -42,7 +42,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                                 "users.index"
                                             )}
                                         >
-                                            Voters
+                                            Members
                                         </NavLink>
                                         <NavLink
                                             href="/contestants"
