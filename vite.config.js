@@ -8,9 +8,16 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: "resources/js/app.jsx",
+            input: ["resources/js/app.jsx", "resources/js/Pages/Dashboard.jsx"],
             refresh: true,
         }),
         react(),
     ],
+    build: {
+        manifest: true,
+        outDir: "public/build",
+        rollupOptions: {
+            input: "resources/js/app.jsx",
+        },
+    },
 });

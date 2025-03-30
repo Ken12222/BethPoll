@@ -28,7 +28,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                 {user.role === "admin" ? (
                                     <>
                                         <NavLink
-                                            href={route("dashboard")}
+                                            href="Dashboard"
+                                            //href={route("Dashboard")}
                                             active={route().current(
                                                 "dashboard"
                                             )}
@@ -54,7 +55,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </>
                                 ) : (
                                     <NavLink
-                                        href={route("dashboard")}
+                                        //href={route("dashboard")}
+                                        href="Dashboard"
                                         active={route().current("dashboard")}
                                     >
                                         Dashboard
