@@ -15,11 +15,17 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $searchQuery = $request->query("query");
+        $query = User::query();
+        $searchResult = $query->when($searchQuery, fn($que)=>$que->where("name", "LIKE", "%".$searchQuery."%"));
+
         return Inertia::render("Users/Index", [
-            "users"=>User::withCount("Vote")->get()
+            "users"=>$searchResult->get()
         ]); 
+    
     }
 
     /**
@@ -94,7 +100,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::where("id", $id)->first();
+        return Inertia::render("Users/details", ["member"=>$user]);
     }
 
     /**
@@ -102,7 +109,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return Inertia::render("Users/edit", ["id"=>$id]);
     }
 
     /**
@@ -110,7 +117,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updateData = $request->validate([
+            'name' => 'required|string|max:255',
+            'membership_id' => 'required|string|lowercase|max:255|unique:'
+        ]);
+
+        $getUser = User::where("id", $id)->first();
+        $updatedData = $getUser->update($updateData);
+
+        if(!$updatedData){
+            return Inertia::render("User/edit", ["error"=>"Failed to update Data. Try again later"]);
+        }
+
+        return Inertia::render("User/edit", ["message"=>"Data updated successfully"]);
+
     }
 
     /**
@@ -118,6 +138,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(User::where("id", $id)->delete()){
+            return Inertia::render("Users/Index", ["message"=>"successfully member deleted"]);
+        }
+
+        return Inertia::render("Users/Index", ["message"=>"failed to delete member"]);
+
+
+
     }
 }

@@ -4,35 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\AllowedVotes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Contestant;
-use App\Models\Vote;
 use Inertia\Inertia;
-use Inertia\Response;
 
-class DashboardController extends Controller
+class AllowedVotesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if(Auth::user()->role === "user"){
-
-        return Inertia::render("Dashboard", [
-            "contestants"=>Contestant::with("votes")->get(),
-            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count(),
-            "vote"=>Vote::where("user_id", Auth::user()->id)->get(),
-            "voteAllowed"=>AllowedVotes::pluck("voteAllowed")
-        ]);
-        }
-
-        return Inertia::render("Dashboard", [
-            "contestants"=>Contestant::with("votes")->get(),
-            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count()
-            //"votes"=>Vote::where("user_id", Auth::user()->id)->get()
-        ]);
-
+        //
     }
 
     /**
@@ -56,7 +37,7 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render("Configuration/edit");
     }
 
     /**
@@ -64,7 +45,8 @@ class DashboardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        return Inertia::render("Configuration/edit");
     }
 
     /**
@@ -72,7 +54,18 @@ class DashboardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updateData = $request->validate([
+            "voteAllowed"=>"required|integer"
+        ]);
+
+        $ifValueIsAlreadySet = AllowedVotes::where("id", $id)->first();
+        //dd($updateData["voteAllowed"]);
+        if($ifValueIsAlreadySet->voteAllowed == $updateData["voteAllowed"]){
+            return Inertia::render("Configuration/edit", ["error"=>"This value is already Set As Default"]);
+        }
+
+        $newAllowedVoteValue = AllowedVotes::where("id", $id)->update($updateData);
+        return Inertia::render("Configuration/edit", ["message"=>"Total votes allowed updated successfully"]);
     }
 
     /**

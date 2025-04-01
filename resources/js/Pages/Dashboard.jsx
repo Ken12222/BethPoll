@@ -12,6 +12,7 @@ export default function Dashboard({
     contestants,
     votesCount,
     totalVoteReached,
+    voteAllowed,
 }) {
     const user = usePage().props.auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -112,7 +113,7 @@ export default function Dashboard({
                                                     Votes Count
                                                 </th>
                                             </tr>
-                                            {console.log(contestants)}
+
                                             {Array.isArray(contestants) &&
                                             contestants.length > 0 ? (
                                                 contestants.map(
@@ -168,7 +169,7 @@ export default function Dashboard({
             ) : (
                 <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        {totalVoteReached || votesCount == 10 ? (
+                        {totalVoteReached || votesCount == voteAllowed ? (
                             <div className="flex justify-center items-center overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                 <p className="text-green-400 flex justify-center p-8">
                                     Thank You for Voting
@@ -225,7 +226,10 @@ export default function Dashboard({
                                                     <p>
                                                         {contestant.firstName}
                                                     </p>
-                                                    <p>{contestant.lastName}</p>
+
+                                                    <p className="ml-2">
+                                                        {contestant.lastName}
+                                                    </p>
                                                 </div>
 
                                                 {contestant.votes.filter(

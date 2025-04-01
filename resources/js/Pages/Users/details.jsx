@@ -1,7 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
-export default function showCotestant({ contestant }) {
+export default function showUser({ member }) {
+    function handleDelete(id) {
+        router.delete(`/users/${id}`);
+    }
     return (
         <main>
             <AuthenticatedLayout
@@ -14,50 +17,55 @@ export default function showCotestant({ contestant }) {
                 <div className="py-12">
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4">
-                            {contestant ? (
+                            {member ? (
                                 <div className="flex gap-4">
-                                    <img
-                                        className="w-36 h-36 mx-4"
-                                        src={contestant.image}
-                                        alt=""
-                                    />
                                     <div>
                                         <div className="flex mb-4">
                                             <p className="text-gray-400 mr-2">
                                                 Name:
                                             </p>
-                                            <p>
-                                                {" "}
-                                                {contestant.firstName}{" "}
-                                                {contestant.lastName}
+                                            <p className="font-bold text-2xl">
+                                                {member.name}
                                             </p>
                                         </div>
                                         <div className="flex mb-4">
                                             <p className="text-gray-400 mr-2">
-                                                Votes:
+                                                Role:
                                             </p>
-                                            {contestant.votes_count}
+                                            {member.role}
                                         </div>
-                                        <Link
+                                        {/* <Link
                                             href={route("contestant.destroy", {
-                                                id: contestant.id,
+                                                id: member.id,
                                             })}
                                             method="delete"
                                             className="text-white bg-red-500 rounded-lg p-2 h-fit mr-4"
                                         >
-                                            Remove Candidate
-                                        </Link>
-                                        <Link
-                                            href="/contestants/edit"
-                                            className="text-white bg-blue-500 rounded-lg p-2 h-fit"
-                                        >
-                                            Update Details
-                                        </Link>
+                                            Delete
+                                        </Link> */}
+                                        <div className="flex items-center gap-4 ">
+                                            <form
+                                                onSubmit={() =>
+                                                    handleDelete(member.id)
+                                                }
+                                            >
+                                                <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 my-2 rounded-lg duration-500">
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                            <Link
+                                                href={`/users/${member.id}/edit`}
+                                                className="text-white bg-blue-500 rounded-lg p-2 h-fit"
+                                            >
+                                                Update Details
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (
                                 <p className="text-gray-400">
-                                    There are no contestants with this id
+                                    There are no details for this member
                                 </p>
                             )}
                         </div>

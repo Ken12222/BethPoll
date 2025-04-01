@@ -1,22 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Link, usePage, useForm } from "@inertiajs/react";
-import { useState } from "react";
-
-// import {
-//     Table,
-//     TableBody,
-//     TableCaption,
-//     TableCell,
-//     TableFooter,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from "../../components/ui/table";
+import { Link, usePage, useForm, router } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 export default function UserIndex({ users }) {
     const user = usePage().props.auth.user;
     const [searchContestant, setSearchContestant] = useState("");
     const { data, setData, post, processing, errors } = useForm("");
+    const [queryFn, setQueryFn] = useState("");
+
     function handleBulkUpload() {
         if (!data) {
             alert("Please select a file for upload");
@@ -34,6 +25,11 @@ export default function UserIndex({ users }) {
             },
         });
     }
+
+    function handleDelete(id) {
+        router.delete(`/users/${id}`);
+    }
+
     return (
         <>
             <AuthenticatedLayout>
@@ -42,20 +38,39 @@ export default function UserIndex({ users }) {
                     <div className="py-12">
                         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                <div className="w-full mx-auto px-4 flex items-center justify-between">
-                                    <input
-                                        type="text"
-                                        placeholder="search contestant"
-                                        className="border-0 bg-gray-100 my-4 w-2/4 rounded-lg"
-                                    />
+                                <div className="flex mx-auto px-4 items-center justify-between">
+                                    <form className="flex items-center">
+                                        <input
+                                            className="w-80 border-0 bg-gray-100 my-4 rounded-lg"
+                                            type="text"
+                                            placeholder="Search a member by name"
+                                            name="query"
+                                            value={data.query}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    query: e.target.value,
+                                                })
+                                            }
+                                        />
+                                        <div>
+                                            <button className="ml-4">
+                                                Search
+                                            </button>
+                                            <button className="ml-8 border-2 border-gray-300 px-4 py-2 rounded-lg">
+                                                Clear Search
+                                            </button>
+                                        </div>
+                                    </form>
+
                                     <div className="flex">
                                         <Link
-                                            className="flex rounded-lg bg-blue-600 text-white px-6 py-2 w-36 h-fit"
+                                            className="rounded-lg duration-500 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2"
                                             href="/users/create"
                                         >
                                             Add Voter
                                         </Link>
-                                        <form className="flex justify-end items-center">
+                                        {/* <form className="flex justify-end items-center">
                                             <input
                                                 className="w-3/5 items-center "
                                                 type="file"
@@ -73,7 +88,7 @@ export default function UserIndex({ users }) {
                                                 Upload Voters
                                             </button>
                                             <p>{errors && errors.error}</p>
-                                        </form>
+                                        </form> */}
                                     </div>
                                 </div>
 
@@ -84,13 +99,16 @@ export default function UserIndex({ users }) {
                                                 ID
                                             </th>
                                             <th className="text-left py-4 text-gray-400">
-                                                Firstname
+                                                Name
                                             </th>
                                             <th className="text-left py-4 text-gray-400">
-                                                Lastname
+                                                Membership ID
                                             </th>
                                             <th className="text-left py-4 text-gray-400">
-                                                Votes Count
+                                                Votes Casted
+                                            </th>
+                                            <th className="text-left py-4 text-gray-400">
+                                                Action
                                             </th>
                                         </tr>
                                         {Array.isArray(users) &&
@@ -108,6 +126,27 @@ export default function UserIndex({ users }) {
                                                         {user.membership_id}
                                                     </td>
                                                     <td>{user.vote_count}</td>
+                                                    <td>
+                                                        <Link
+                                                            href={`/users/${user.id}`}
+                                                            className="bg-green-600 hover:bg-green-500 rounded-lg duration-500 text-white px-4 py-2"
+                                                        >
+                                                            View
+                                                        </Link>
+                                                    </td>
+                                                    <td className="flex justify-center">
+                                                        <form
+                                                            onSubmit={() =>
+                                                                handleDelete(
+                                                                    user.id
+                                                                )
+                                                            }
+                                                        >
+                                                            <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 my-2 rounded-lg duration-500">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             ))
                                         ) : (
@@ -117,53 +156,6 @@ export default function UserIndex({ users }) {
                                         )}
                                     </tbody>
                                 </table>
-
-                                {/* <Table>
-                                    <TableCaption className="mb-4">
-                                        Voters For the 2025 Bethlehem
-                                        Congregation Elections
-                                    </TableCaption>
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead className="w-[100px]">
-                                                ID
-                                            </TableHead>
-                                            <TableHead>Voter Name</TableHead>
-                                            <TableHead>Membership ID</TableHead>
-
-                                            <TableHead className="text-left">
-                                                Votes Cast
-                                            </TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {Array.isArray(users) &&
-                                        users.length > 0 ? (
-                                            users.map((user) => (
-                                                <TableRow key={user.id}>
-                                                    <TableCell className="font-medium">
-                                                        {user.id}
-                                                    </TableCell>
-
-                                                    <TableCell className="font-medium">
-                                                        {user.name}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {user.membership_id}
-                                                    </TableCell>
-
-                                                    <TableCell>
-                                                        {user.vote_count}
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))
-                                        ) : (
-                                            <p className="text-gray-400 flex justify-center p-4">
-                                                There are no Contestants Yet
-                                            </p>
-                                        )}
-                                    </TableBody>
-                                </Table> */}
                             </div>
                         </div>
                     </div>

@@ -55,7 +55,7 @@ class ContestantController extends Controller
             $path = $file->storeAs('upload', $fileName, 'public');
             Storage::disk('public')->put("upload", $fileName);
 
-            $imageUrl = asset('storage/upload/'.$fileName);
+            $imageUrl = asset('storage/upload/'.$fileName); 
 
             $contestantData["image"] = $imageUrl;
         }

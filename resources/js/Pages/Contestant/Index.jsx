@@ -2,17 +2,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, router, usePage } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
-// import {
-//     Table,
-//     TableBody,
-//     TableCaption,
-//     TableCell,
-//     TableFooter,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from "../../components/ui/table";
-
 export default function contestantIndex({ contestants }) {
     const user = usePage().props.auth.user;
 
@@ -27,11 +16,15 @@ export default function contestantIndex({ contestants }) {
                         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                                 <div className="w-full mx-auto px-4 flex items-center justify-between">
-                                    <input
-                                        type="text"
-                                        placeholder="search contestant"
-                                        className="border-0 bg-gray-100 my-4 w-2/4 rounded-lg"
-                                    />
+                                    <form action="">
+                                        <input
+                                            type="text"
+                                            name="searchquery"
+                                            placeholder="search contestant"
+                                            className="border-0 bg-gray-100 my-4 w-2/4 rounded-lg"
+                                        />
+                                    </form>
+
                                     <Link
                                         className="flex rounded-lg bg-blue-600 text-white px-6 py-2 w-fit h-fit"
                                         href="/contestants/create"
@@ -99,7 +92,7 @@ export default function contestantIndex({ contestants }) {
                     </div>
                 ) : (
                     //Regular User Logged in View
-                    router.visit("dashboard")
+                    router.visit("Dashboard")
                 )}
             </AuthenticatedLayout>
         </>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllowedVotesController;
 use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -28,11 +29,33 @@ Route::get('users/create', [UserController::class, "create"])
 ->middleware(['auth', 'verified'])->name('users.create');
 Route::post('/users/store', [UserController::class, "store"])
 ->middleware(['auth', 'verified'])->name('users.store');
+Route::get('users/{users}', [UserController::class, "show"])
+->middleware(["auth", "verified"])->name("users.show");
+Route::delete('users/{users}', [UserController::class, "destroy"])
+->middleware(["auth", "verified"])->name("users.destroy");
+Route::get('users/{users}/edit', [UserController::class, "edit"])
+->middleware(["auth", "verified"])->name("users.edit");
+Route::put('users/{users}', [UserController::class, "update"])
+->middleware(["auth", "verified"])->name("users.update");
+
+//upload
 Route::post('/users/bulk-upload', [UserController::class, 'bulkUpload']);
 
+
+//Dashboard Route
 Route::get('Dashboard', [DashboardController::class, "index"])
 ->middleware(['auth', 'verified'])->name('dashboard');
+//Dashboard Route
 
+
+//Vote Configuration Route
+Route::get('/Configuration/{Configuration}/edit', [AllowedVotesController::class, "edit"])
+->middleware(['auth', 'verified'])->name('Configuration.edit');
+Route::get('/Configuration/{Configuration}', [AllowedVotesController::class, "show"])
+->middleware(['auth', 'verified'])->name('Configuration.show');
+Route::POST('/Configuration/{Configuration}', [AllowedVotesController::class, "update"])
+->middleware(['auth', 'verified'])->name('Configuration.update');
+//Vote Configuration Route
 
 //contestant routes
 Route::get('/contestants', [ContestantController::class, "index"]
