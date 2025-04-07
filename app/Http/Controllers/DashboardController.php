@@ -6,6 +6,7 @@ use App\Models\AllowedVotes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Contestant;
+use App\Models\User;
 use App\Models\Vote;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -29,7 +30,13 @@ class DashboardController extends Controller
 
         return Inertia::render("Dashboard", [
             "contestants"=>Contestant::with("votes")->get(),
-            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count()
+            "votesCount"=>Vote::where("user_id", Auth::user()->id)->count(),
+            "totalVotes"=>Vote::where("vote", 1)->with("user")->count(),
+            "totalMembers"=>User::where("role", "user")->count(),
+            "totalMembersVoted"=>User::whereHas('vote', function ($query) {
+                $query->where('vote', 1);
+            })->count()
+
             //"votes"=>Vote::where("user_id", Auth::user()->id)->get()
         ]);
 

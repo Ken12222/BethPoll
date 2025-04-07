@@ -34,7 +34,7 @@ export default function showCotestant({ contestant }) {
                                         </div>
                                         <div className="flex mb-4">
                                             <p className="text-gray-400 mr-2">
-                                                Votes:
+                                                Votes Cast:
                                             </p>
                                             {contestant.votes_count}
                                         </div>
@@ -48,7 +48,7 @@ export default function showCotestant({ contestant }) {
                                             Remove Candidate
                                         </Link>
                                         <Link
-                                            href="/contestants/edit"
+                                            href={`/contestants/${contestant.id}/edit`}
                                             className="text-white bg-blue-500 rounded-lg p-2 h-fit"
                                         >
                                             Update Details

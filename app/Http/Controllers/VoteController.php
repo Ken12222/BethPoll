@@ -21,6 +21,11 @@ class VoteController extends Controller
     {
         return Inertia::render("Dashboard", [
             "contestants"=>Contestant::with("votes")->get(),
+            "totalVotes"=>Vote::where("vote", 1)->count(),
+            "totalMembers"=>User::where("role", "user")->count(),
+            "totalMembersVoted"=>User::whereHas('vote', function ($query) {
+                $query->where('vote', 1);
+            })->count(),
             "votes"=>Vote::all()
         ]);
     }

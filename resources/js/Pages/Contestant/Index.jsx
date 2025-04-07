@@ -29,7 +29,7 @@ export default function contestantIndex({ contestants }) {
                                         className="flex rounded-lg bg-blue-600 text-white px-6 py-2 w-fit h-fit"
                                         href="/contestants/create"
                                     >
-                                        Add Contestant
+                                        Add Candidate
                                     </Link>
                                 </div>
                                 <table className="w-full mx-4 mb-4">
@@ -45,7 +45,7 @@ export default function contestantIndex({ contestants }) {
                                                 Lastname
                                             </th>
                                             <th className="text-left py-4 text-gray-400">
-                                                Votes Count
+                                                Action
                                             </th>
                                         </tr>
                                         {Array.isArray(contestants) &&
@@ -65,18 +65,25 @@ export default function contestantIndex({ contestants }) {
                                                         {contestant.lastName}
                                                     </td>
                                                     <td>
-                                                        {contestant.votes?.map(
-                                                            (vote) => (
-                                                                <p
-                                                                    key={
-                                                                        vote.contestant_id
-                                                                    }
-                                                                >
-                                                                    {" "}
-                                                                    {vote.vote}
-                                                                </p>
-                                                            )
-                                                        )}
+                                                        <Link
+                                                            href={`/contestants/${contestant.id}`}
+                                                            className="bg-green-600 hover:bg-green-500 rounded-lg duration-500 text-white px-4 py-2"
+                                                        >
+                                                            View
+                                                        </Link>
+                                                    </td>
+                                                    <td className="flex justify-center">
+                                                        <form
+                                                            onSubmit={() =>
+                                                                handleDelete(
+                                                                    contestant.id
+                                                                )
+                                                            }
+                                                        >
+                                                            <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 my-2 rounded-lg duration-500">
+                                                                Delete
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             ))

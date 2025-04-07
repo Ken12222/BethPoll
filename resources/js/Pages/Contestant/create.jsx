@@ -28,7 +28,7 @@ export default function createContestant() {
             <AuthenticatedLayout
                 header={
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        Add New Contestants
+                        Add New Candidate
                     </h2>
                 }
             >

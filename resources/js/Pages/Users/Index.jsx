@@ -68,7 +68,7 @@ export default function UserIndex({ users }) {
                                             className="rounded-lg duration-500 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2"
                                             href="/users/create"
                                         >
-                                            Add Voter
+                                            Add Member
                                         </Link>
                                         {/* <form className="flex justify-end items-center">
                                             <input

@@ -70,7 +70,7 @@ Route::post('/contestants', [ContestantController::class, "store"]
 Route::get('/contestants/{contestant}', [ContestantController::class, "show"]
 )->middleware(['auth', 'verified'])->name('contestant.show');
 
-Route::get('/contestants/edit', [ContestantController::class, "edit"]
+Route::get('/contestants/{contestants}/edit', [ContestantController::class, "edit"]
 )->middleware(['auth', 'verified'])->name('contestant.edit');
 
 Route::delete('/contestants/{contestant}', [ContestantController::class, "destroy"]

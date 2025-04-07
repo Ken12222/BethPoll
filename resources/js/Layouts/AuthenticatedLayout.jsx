@@ -50,7 +50,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                                 "/contestants"
                                             )}
                                         >
-                                            Contestant
+                                            Candidate
                                         </NavLink>
                                         <NavLink
                                             href={`/Configuration/${voteAllowedID}/edit`}

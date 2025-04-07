@@ -20,7 +20,7 @@ export default function createContestant() {
             <AuthenticatedLayout
                 header={
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        Add New Voter
+                        Add A Member
                     </h2>
                 }
             >
@@ -34,7 +34,7 @@ export default function createContestant() {
                             >
                                 <div className="w-5/6 mx-auto">
                                     <label htmlFor="Firstname">
-                                        Voter Name
+                                        Member Name
                                     </label>
                                     <input
                                         type="text"

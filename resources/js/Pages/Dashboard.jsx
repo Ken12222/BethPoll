@@ -13,7 +13,11 @@ export default function Dashboard({
     votesCount,
     totalVoteReached,
     voteAllowed,
+    totalVotes,
+    totalMembers,
+    totalMembersVoted,
 }) {
+    console.log(totalMembersVoted);
     const user = usePage().props.auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
         contestant_id: "",
@@ -112,6 +116,9 @@ export default function Dashboard({
                                                 <th className="text-left py-4 text-gray-400">
                                                     Votes Count
                                                 </th>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Percentage
+                                                </th>
                                             </tr>
 
                                             {Array.isArray(contestants) &&
@@ -127,7 +134,7 @@ export default function Dashboard({
                                                             </td>
                                                             <td>
                                                                 <img
-                                                                    className="w-8 h-8 my-2"
+                                                                    className="w-8 h-8 my-2 rounded-full"
                                                                     src={
                                                                         contestant.image
                                                                     }
@@ -151,6 +158,16 @@ export default function Dashboard({
                                                                         .length
                                                                 }
                                                             </td>
+                                                            <td>
+                                                                {(
+                                                                    (contestant
+                                                                        .votes
+                                                                        .length /
+                                                                        totalVotes) *
+                                                                    100
+                                                                ).toFixed(2)}
+                                                                %
+                                                            </td>
                                                         </tr>
                                                     )
                                                 )
@@ -159,6 +176,24 @@ export default function Dashboard({
                                                     There are no Contestants Yet
                                                 </p>
                                             )}
+                                            <tr>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Total Votes
+                                                </th>
+                                                <td>{totalVotes}</td>
+                                            </tr>
+                                            <tr>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Registered Members
+                                                </th>
+                                                <td>{totalMembers}</td>
+                                            </tr>
+                                            <tr>
+                                                <th className="text-left py-4 text-gray-400">
+                                                    Voting Members
+                                                </th>
+                                                <td>{totalMembersVoted}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -241,7 +276,7 @@ export default function Dashboard({
                                                             user.id
                                                 ).length > 0 ? (
                                                     <span className="bg-gray-400 text-white px-4 py-1 flex justify-center">
-                                                        Voted
+                                                        Vote Recorded
                                                     </span>
                                                 ) : (
                                                     <form
