@@ -84,7 +84,7 @@ class ContestantController extends Controller
      */
     public function edit(string $id)
     {
-        return Inertia::render('Contestant/edit');
+        return Inertia::render('Contestant/edit', ["id"=>$id]);
     }
 
     /**
@@ -92,7 +92,39 @@ class ContestantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $updateData = $request->validate(
+            [
+                "firstName"=>"required|string|max:255",
+                "lastName"=>"required|string|max:255",
+                "image"=>"sometimes|mimes:png,jpg,jpeg|max:2048",
+            ]
+        );
+
+        //dd($updateData);
+
+        if(!$updateData){
+            return Inertia::render("Contestant/edit", ["error"=>"Failed to update Data. Try again later"]);
+        }
+
+        if($request->hasFile("image")){
+            $file = $request->file("image");
+
+            $fileExtension = $file->getClientOriginalExtension();
+            $extensionToLower = strtolower($fileExtension);
+            $fileName = time().".".$extensionToLower;
+            $path = $file->storeAs('upload', $fileName, 'public');
+            Storage::disk('public')->put("upload", $fileName);
+
+            $imageUrl = asset('storage/upload/'.$fileName); 
+
+            $updateData["image"] = $imageUrl;
+        }
+
+        $updatedContestant = Contestant::findOrFail($id);
+        $updatedContestant->update($updateData);
+        return Inertia::render('Contestant/Index',['message', 'Candidate updated successfully.',
+        "contestants"=>Contestant::withCount("votes")->get()]);
     }
 
     /**

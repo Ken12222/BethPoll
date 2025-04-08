@@ -1,17 +1,16 @@
 import { Head, usePage, useForm, Link, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useState } from "react";
 
-export default function updateUser({ id }) {
+export default function updateUser({ id, message }) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         membership_id: "",
     });
 
-    function handleSubmit(e, id) {
+    function handleSubmit(e) {
         e.preventDefault();
 
-        router.put(`/users/${id}`);
+        post(`/users/${id}`);
     }
     return (
         <>
@@ -26,7 +25,7 @@ export default function updateUser({ id }) {
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <form
-                                onSubmit={() => handleSubmit(id)}
+                                onSubmit={handleSubmit}
                                 className="flex flex-wrap md:no-wrap gap-4 my-4"
                                 encType="multipart/form-data"
                             >
@@ -65,6 +64,11 @@ export default function updateUser({ id }) {
                                         placeholder="enter candidate lastname"
                                         className="w-full rounded-lg"
                                     />
+                                    {message && (
+                                        <p className="text-green-600">
+                                            {message}
+                                        </p>
+                                    )}
                                     {errors.membership_id && (
                                         <p className="text-red-600">
                                             {errors.membership_id}

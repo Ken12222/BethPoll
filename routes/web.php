@@ -35,7 +35,7 @@ Route::delete('users/{users}', [UserController::class, "destroy"])
 ->middleware(["auth", "verified"])->name("users.destroy");
 Route::get('users/{users}/edit', [UserController::class, "edit"])
 ->middleware(["auth", "verified"])->name("users.edit");
-Route::put('users/{users}', [UserController::class, "update"])
+Route::post('users/{users}', [UserController::class, "update"])
 ->middleware(["auth", "verified"])->name("users.update");
 
 //upload
@@ -67,13 +67,16 @@ Route::get('/contestants/create', [ContestantController::class, "create"]
 Route::post('/contestants', [ContestantController::class, "store"]
 )->middleware(['auth', 'verified'])->name('contestant.store');
 
-Route::get('/contestants/{contestant}', [ContestantController::class, "show"]
+Route::get('/contestants/{contestants}', [ContestantController::class, "show"]
 )->middleware(['auth', 'verified'])->name('contestant.show');
 
 Route::get('/contestants/{contestants}/edit', [ContestantController::class, "edit"]
 )->middleware(['auth', 'verified'])->name('contestant.edit');
 
-Route::delete('/contestants/{contestant}', [ContestantController::class, "destroy"]
+Route::post("/contestants/{contestants}", [ContestantController::class, "update"])
+->middleware(["auth", "verified"])->name("contestant.update");
+
+Route::delete('/contestants/{contestants}', [ContestantController::class, "destroy"]
 )->middleware(['auth', 'verified'])->name('contestant.destroy');
 
 //contestant routes

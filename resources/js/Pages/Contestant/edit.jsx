@@ -1,9 +1,7 @@
-import { Head, usePage, useForm, Link, router } from "@inertiajs/react";
+import { Head, usePage, useForm, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 
-export default function editContestant({ id }) {
+export default function editContestant({ id, error }) {
     const { data, setData, post, processing, errors } = useForm({
         firstName: "",
         lastName: "",
@@ -15,17 +13,12 @@ export default function editContestant({ id }) {
         const file = e.target.files[0];
         if (file) {
             setData("image", file);
-            //setPreview(URL.createObjectURL(file));
         }
     };
 
-    function handleSubmit(e, id) {
+    function handleSubmit(e) {
         e.preventDefault();
-
-        router.put(`/contestants/${id}`);
-    }
-    {
-        console.log(id);
+        post(`/contestants/${id}`);
     }
     return (
         <>
@@ -40,7 +33,7 @@ export default function editContestant({ id }) {
                     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <form
-                                onSubmit={() => handleSubmit(id)}
+                                onSubmit={handleSubmit}
                                 className="flex flex-wrap md:no-wrap gap-4 my-4"
                                 encType="multipart/form-data"
                             >
@@ -55,7 +48,7 @@ export default function editContestant({ id }) {
                                                 firstName: e.target.value,
                                             })
                                         }
-                                        placeholder="enter candidate firstname"
+                                        placeholder="Enter candidate firstname"
                                         className="w-full rounded-lg"
                                     />
                                     {errors.firstName && (
@@ -76,7 +69,7 @@ export default function editContestant({ id }) {
                                                 lastName: e.target.value,
                                             })
                                         }
-                                        placeholder="enter candidate lastname"
+                                        placeholder="Enter candidate lastname"
                                         className="w-full rounded-lg"
                                     />
                                     {errors.lastName && (
@@ -98,10 +91,8 @@ export default function editContestant({ id }) {
                                             {errors.image}
                                         </p>
                                     )}
-                                    {errors.image && (
-                                        <p className="text-red-600">
-                                            {errors.image}
-                                        </p>
+                                    {error && (
+                                        <p className="text-red-600">{error}</p>
                                     )}
                                 </div>
                                 <div className="w-full mx-auto flex justify-center">

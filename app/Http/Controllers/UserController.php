@@ -117,19 +117,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $updateData = $request->validate([
+        
+        $requestData = $request->validate([
             'name' => 'required|string|max:255',
-            'membership_id' => 'required|string|lowercase|max:255|unique:'
+            'membership_id' => 'sometimes|exclude_if:unique:users,membership_id,true|string|exists:lowercase|max:255'
         ]);
-
+        
         $getUser = User::where("id", $id)->first();
-        $updatedData = $getUser->update($updateData);
+
+        $updatedData = $getUser->update($requestData);
 
         if(!$updatedData){
-            return Inertia::render("User/edit", ["error"=>"Failed to update Data. Try again later"]);
+            return Inertia::render("Users/edit", ["error"=>"Failed to update Data. Try again later"]);
         }
 
-        return Inertia::render("User/edit", ["message"=>"Data updated successfully"]);
+        return Inertia::render("Users/edit", ["message"=>"Data updated successfully"]);
 
     }
 
